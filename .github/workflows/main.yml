@@ -10,14 +10,33 @@ jobs:
       DB_PASSWORD: 'root'
       DB_HOST: localhost
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: laravel_tags
+        ports:
+          - 33060
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3      
+
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: MySql Start
+      # - name: MySql Start Default
+      #   run: |
+      #     echo "running MYSQL DEFAULT from CLI"
+      #     sudo /etc/init.d/mysql start
+      #     mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+      #     mysql -e 'SELECT @@version' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+      #     mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }}
+      #     mysql -e 'CREATE TABLE cars (id int primary key auto_increment);' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }}
+      #     mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }}
+
+      - name: MySql Start Service
         run: |
-          echo "running MYSQL from CLI"
-          sudo /etc/init.d/mysql start
+          echo "running MYSQL Service from CLI"
           mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
           mysql -e 'SELECT @@version' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
           mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }}
