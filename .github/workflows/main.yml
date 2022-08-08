@@ -4,8 +4,21 @@ jobs:
   build:
     name: Hello world action
     runs-on: ubuntu-latest
+    env:      
+      DB_DATABASE: wordpress_test
+      DB_USER: root
+      DB_PASSWORD: 'root'
+      DB_HOST: localhost
+
     steps:
-      - uses: actions/checkout@v1
-      - uses: ./action-a
-        with:
-          MY_NAME: "Mona"
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: MySql Start
+        run: |
+          echo "running MYSQL from CLI"
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}      
+      # - uses: ./action-a
+      #   with:
+      #     MY_NAME: "Mona"
