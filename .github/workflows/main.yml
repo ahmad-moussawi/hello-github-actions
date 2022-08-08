@@ -15,7 +15,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: laravel_tags
+          MYSQL_DATABASE: wordpress_test
         ports:
           - 33060
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3      
@@ -37,11 +37,11 @@ jobs:
       - name: MySql Start Service
         run: |
           echo "running MYSQL Service from CLI"
-          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
-          mysql -e 'SELECT @@version' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
-          mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }}
-          mysql -e 'CREATE TABLE cars (id int primary key auto_increment);' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }}
-          mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} ${{ env.DB_DATABASE }}
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }}
+          mysql -e 'SELECT @@version' -u${{ env.DB_USER }}
+          mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
+          mysql -e 'CREATE TABLE cars (id int primary key auto_increment);' -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
+          mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
 
       # - uses: ./action-a
       #   with:
