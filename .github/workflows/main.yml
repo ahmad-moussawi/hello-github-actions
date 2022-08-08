@@ -37,11 +37,11 @@ jobs:
       - name: MySql Start Service
         run: |
           echo "running MYSQL Service from CLI"
-          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }}
-          mysql -e 'SELECT @@version' -u${{ env.DB_USER }}
-          mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
-          mysql -e 'CREATE TABLE cars (id int primary key auto_increment);' -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
-          mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -h 127.0.0.1 --port=33060 -u${{ env.DB_USER }}
+          mysql -e 'SELECT @@version' -h 127.0.0.1 --port=33060 -u${{ env.DB_USER }}
+          mysql -e 'SHOW TABLES;' -h 127.0.0.1 --port=33060 -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
+          mysql -e 'CREATE TABLE cars (id int primary key auto_increment);' -h 127.0.0.1 --port=33060 -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
+          mysql -e 'SHOW TABLES;' -h 127.0.0.1 --port=33060 -u${{ env.DB_USER }} ${{ env.DB_DATABASE }}
 
       # - uses: ./action-a
       #   with:
