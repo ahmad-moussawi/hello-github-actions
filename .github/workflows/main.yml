@@ -19,6 +19,8 @@ jobs:
           echo "running MYSQL from CLI"
           sudo /etc/init.d/mysql start
           mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}      
+          mysql -e 'SHOW TABLES;' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}      
+
       # - uses: ./action-a
       #   with:
       #     MY_NAME: "Mona"
